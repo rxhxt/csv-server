@@ -1,0 +1,16 @@
+server:
+  port: 8000
+  readonly: true
+resources:
+  users:
+    file: users.csv
+    primary_key: id
+    readonly: false
+  orders:
+    file: orders.csv
+    primary_key: order_id
+    readonly: true
+  cars:
+    file: cars.csv
+    primary_key: id
+    readonly: false

@@ -1,0 +1,6 @@
+id,order_id,user_id,total_amount,status
+1,1001,1,250.00,completed
+2,1002,2,150.00,pending
+3,1003,1,300.00,completed
+4,1004,3,450.00,canceled
+5,1005,2,200.00,completed

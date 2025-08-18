@@ -1,0 +1,14 @@
+{
+  "users": {
+    "id": "integer",
+    "name": "string",
+    "email": "string"
+  },
+  "orders": {
+    "id": "integer",
+    "order_id": "integer",
+    "user_id": "integer",
+    "total_amount": "float",
+    "status": "string"
+  }
+}

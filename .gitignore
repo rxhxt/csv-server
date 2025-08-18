@@ -5,7 +5,11 @@ __pycache__/
 
 # C extensions
 *.so
+.DS_Store
+commands.txt
+instructions.md
 
+csv-server-env/
 # Distribution / packaging
 .Python
 build/
