@@ -1,27 +1,57 @@
 # CSV Server
 
-This project implements a CSV Server, a Python library and CLI that turns CSV files into REST APIs, similar to json-server but specifically for CSV files. 
+[![PyPI version](https://badge.fury.io/py/csv-server.svg)](https://pypi.org/project/csv-server/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/yourusername/csv-server/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/csv-server/actions)
 
-## Goals
+**CSV Server** is a robust Python library and CLI tool that instantly turns your CSV files into a fully-featured REST API. Inspired by [json-server](https://github.com/typicode/json-server), it is designed for rapid prototyping, data exploration, and lightweight data services—no database required.
 
-- **Drop-in Tool**: Point to a folder of .csv files and instantly get REST endpoints.
-- **Read-only Default**: The server operates in read-only mode by default, with optional safe writes (POST/PUT/PATCH/DELETE).
-- **Auto ID Support**: Automatically synthesize and increment an ID if CSVs do not have a primary key.
-- **Query Parameters**: Support for searching, filtering, sorting, and pagination.
-- **Safe Writes**: Ensure atomic replace operations with file locks.
-- **Swagger Documentation**: Interactive API documentation available at `/docs`.
+---
 
-## Tech Stack
+## Features
 
-- **FastAPI**: Web framework with automatic OpenAPI documentation.
-- **Typer**: Command Line Interface (CLI) framework.
-- **portalocker**: Library for safe file locks.
-- **csv**: Standard library for parsing and writing CSV files.
-- **pandas**: Optional library for handling large datasets.
-- **pytest + httpx**: Testing framework and HTTP client for tests.
-- **ruff, mypy**: Tools for linting and type checking.
+- 🚀 **Instant REST API**: Serve any folder of CSV files as RESTful endpoints.
+- 🔒 **Read-Only by Default**: Safe, non-destructive access; enable writes as needed.
+- 🆔 **Auto-ID Management**: Automatic primary key synthesis and incrementing.
+- 🔎 **Advanced Querying**: Search, filter, sort, and paginate results.
+- 🛡️ **Safe Writes**: Atomic file operations with file locking.
+- 📖 **Interactive API Docs**: Swagger/OpenAPI documentation at `/docs`.
+- ⚡ **CLI & Python API**: Use as a command-line tool or integrate as a library.
+- 🧪 **Comprehensive Testing**: Includes pytest-based test suite.
+- 🐍 **Modern Python**: Type hints, linting, and optional pandas support for large datasets.
 
-## Directory Layout
+---
+
+## Installation
+
+```bash
+pip install csv-server
+```
+
+---
+
+## Quick Start
+
+### CLI Usage
+
+```bash
+csv-server serve ./data --port 8000
+```
+
+- Instantly exposes all CSV files in `./data` as REST endpoints.
+- Visit [http://localhost:8000/docs](http://localhost:8000/docs) for interactive API documentation.
+
+### Python Library Usage
+
+```python
+from csv_server import serve_csv_directory
+
+serve_csv_directory("./data", port=8000, readonly=True)
+```
+
+---
+
+## Directory Structure
 
 ```
 csv_server/
@@ -33,7 +63,7 @@ csv_server/
   storage/
     base.py
     csv_store.py
-    sqlite_store.py (optional)
+    sqlite_store.py
   query.py
   utils_csv_ids.py
   version.py
@@ -47,48 +77,93 @@ README.md
 LICENSE
 ```
 
-## Core Features
+---
 
-- **GET /users**: List rows with support for query parameters like `q`, `filter`, `sort`, `limit`, and `offset`.
-- **GET /users/{id}**: Fetch a single row by ID.
-- **POST /users**: Add a new row with auto-assigned ID if missing.
-- **PUT/PATCH /users/{id}**: Update or replace a row.
-- **DELETE /users/{id}**: Delete a row.
-- **ETags + If-None-Match**: Support for 304 Not Modified responses.
-- **OpenAPI Documentation**: Available at `/docs`.
+## API Overview
 
-## Auto-ID Handling
+For each CSV file (e.g., `users.csv`), the following endpoints are generated:
 
-The server automatically manages primary keys and ID assignments, ensuring that each entry in the CSV files has a unique identifier.
+| Method | Endpoint            | Description                        |
+|--------|---------------------|------------------------------------|
+| GET    | `/users`            | List rows with query support       |
+| GET    | `/users/{id}`       | Fetch a single row by ID           |
+| POST   | `/users`            | Add a new row (if not read-only)   |
+| PUT    | `/users/{id}`       | Replace a row (if not read-only)   |
+| PATCH  | `/users/{id}`       | Update a row (if not read-only)    |
+| DELETE | `/users/{id}`       | Delete a row (if not read-only)    |
+| GET    | `/users/schema`     | Get inferred column schema         |
 
-## CLI
+### Query Parameters
 
-The server can be run using Typer with commands to specify the directory of CSV files and other options, such as read-only mode.
+- `q`: Full-text search
+- `filter`: Field-based filtering (e.g., `filter=age:gt:30`)
+- `sort`: Sorting (e.g., `sort=name:asc`)
+- `limit` & `offset`: Pagination
+
+---
 
 ## Configuration
 
-The server supports a YAML configuration file to manage settings like server port, read-only mode, and resource definitions.
+You can use a YAML config file for advanced setup:
 
-## Testing
+```yaml
+resources:
+  users:
+    file: "users.csv"
+    primary_key: "id"
+    readonly: false
+  orders:
+    file: "orders.csv"
+    primary_key: "order_id"
+    readonly: true
+```
 
-The project includes tests using pytest and httpx to ensure that all features work as expected, including handling of query parameters and safe writes.
+Run with:
+
+```bash
+csv-server serve ./data --config config.yaml
+```
+
+---
 
 ## Example Data
 
-Example CSV files are provided in the `examples/data/` directory for demonstration purposes.
+Sample CSV files are provided in `examples/data/` for demonstration and testing.
+
+---
+
+## Testing
+
+Run the test suite with:
+
+```bash
+pytest
+```
+
+---
 
 ## Roadmap
 
-Future enhancements include:
-- Implementing an SQLite backend for larger datasets.
-- Adding hot reload functionality for CSV files.
-- Supporting relationships between resources.
-- Creating Docker images for easy deployment.
+- [ ] SQLite backend for large datasets
+- [ ] Hot reload for CSV file changes
+- [ ] Resource relationships (foreign keys)
+- [ ] Docker image for easy deployment
 
-## How to Contribute
+---
 
-Contributions are welcome! Please follow the guidelines in the repository for submitting issues and pull requests.
+## Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+---
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgments
+
+- Built with [FastAPI](https://fastapi.tiangolo.com/)
+- Inspired by [json-server](https://github.com/typicode/json-server)
