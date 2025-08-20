@@ -9,10 +9,10 @@ We welcome bug reports, feature requests, documentation improvements, and code c
 
 ### 1. Fork the Repository
 
-Click the **Fork** button at the top right of the [GitHub repo](https://github.com/yourusername/csv-server) and clone your fork:
+Click the **Fork** button at the top right of the [GitHub repo](https://github.com/rxhxt/csv-server) and clone your fork:
 
 ```bash
-git clone https://github.com/yourusername/csv-server.git
+git clone https://github.com/rxhxt/csv-server.git
 cd csv-server
 ```
 
