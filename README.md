@@ -2,7 +2,7 @@
 
 [![PyPI version](https://badge.fury.io/py/csv-server.svg)](https://pypi.org/project/csv-server/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![CI](https://github.com/yourusername/csv-server/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/csv-server/actions)
+[![CI](https://github.com/rxhxt/csv-server/actions/workflows/ci.yml/badge.svg)](https://github.com/rxhxt/csv-server/actions)
 
 **CSV Server** is a robust Python library and CLI tool that instantly turns your CSV files into a fully-featured REST API. Inspired by [json-server](https://github.com/typicode/json-server), it is designed for rapid prototyping, data exploration, and lightweight data services—no database required.
 

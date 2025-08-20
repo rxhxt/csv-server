@@ -59,7 +59,7 @@ Describe your changes and reference any related issues.
 
 ## Reporting Issues
 
-If you find a bug or have a feature request, please [open an issue](https://github.com/yourusername/csv-server/issues) and provide as much detail as possible.
+If you find a bug or have a feature request, please [open an issue](https://github.com/rxhxt/csv-server/issues) and provide as much detail as possible.
 
 ---
 
